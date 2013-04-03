@@ -2,7 +2,7 @@ from django.conf.urls.defaults import *
 
 
 admin_urls = patterns(
-     'labels.admin',
+     'spicy.labels.admin',
 
 #     # labels
 #     url(r'^$', 'labels', name='index'),
