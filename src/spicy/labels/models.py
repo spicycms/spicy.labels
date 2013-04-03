@@ -1,8 +1,10 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from presscenter import utils
+from spicy.presscenter import utils
+
 
 DocumentModel = utils.get_concrete_document()
+
 
 class Label(models.Model):
     document = models.ForeignKey(DocumentModel)
