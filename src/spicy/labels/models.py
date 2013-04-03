@@ -1,13 +1,10 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from spicy.presscenter import utils
-
-
-DocumentModel = utils.get_concrete_document()
+from spicy.presscenter.defaults import CUSTOM_DOCUMENT_MODEL
 
 
 class Label(models.Model):
-    document = models.ForeignKey(DocumentModel)
+    document = models.ForeignKey(CUSTOM_DOCUMENT_MODEL)
     text = models.CharField(_('Label text'), max_length=255, db_index=True)
     order_lv = models.PositiveSmallIntegerField(default=0)
 

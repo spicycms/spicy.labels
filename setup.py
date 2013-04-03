@@ -37,10 +37,10 @@ setup(
     zip_safe=False,
     long_description=long_description(),
     install_requires=[
-        'spicy==1.1',
+        'spicy.presscenter==1.0',
     ],
     dependency_links=[
-        'hg+http://hg.bramabrama.com/spicy#egg=spicy-1.1',
+        'hg+http://hg.bramabrama.com/spicy.presscenter#egg=spicy.presscenter-1.1',
     ],
     classifiers=[
         'Framework :: Django',
