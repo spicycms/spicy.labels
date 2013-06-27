@@ -1,0 +1,27 @@
+{% if perms.labels %}{% load url from future %}
+
+{% with perms.profile as pm %}
+<li class="dark-nav{% if "/admin/labels" in request.path %} active{% endif %}">
+  <span class="glow"></span>
+  <a class="accordion-toggle collapsed" data-toggle="collapse" href="#labels">
+    <i class="icon-tags icon-2x"></i>
+    <span>{% trans "Labels" %}
+      <i class="icon-caret-down"></i>
+    </span>
+  </a>
+
+  <ul id="labels" class="collapse {% if "/admin/labels" in request.path %} in{% endif %}">
+    <li>
+      <a href="{#% url 'categories:admin:create_label' %#}">
+        <i class="icon-plus-sign-alt"></i> {% trans "Create label" %}
+      </a>
+    </li>
+    <li>
+      <a href="{#% url 'categories:admin:labels' %#}">
+        <i class="icon-list-alt"></i> {% trans "All labels" %}
+      </a>
+    </li>
+  </ul>
+</li>
+{% endwith %}
+{% endif %}

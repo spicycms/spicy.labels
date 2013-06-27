@@ -23,7 +23,7 @@ setup(
     version='1.0',
     author='Burtsev Alexander',
     author_email='eburus@gmail.com',
-    description='Spicy Categories',
+    description='Spicy labels',
     license='BSD',
     keywords='django, cms',
     url='',
@@ -31,16 +31,18 @@ setup(
     packages=find_packages('src'),
     package_dir={
         '': 'src',
-        'spicy.labels.templatetags': 'src/spicy/labels/templatetags'
     },
+
     include_package_data=True,
     zip_safe=False,
     long_description=long_description(),
+    namespace_packages=['spicy',],
+
     install_requires=[
-        'spicy.presscenter==1.0',
+        'spicy.presscenter>=1.0',
     ],
     dependency_links=[
-        'hg+http://hg.bramabrama.com/spicy.presscenter#egg=spicy.presscenter-1.1',
+        'hg+http://hg.bramabrama.com/spicy.presscenter#egg=spicy.presscenter',
     ],
     classifiers=[
         'Framework :: Django',
