@@ -4,11 +4,11 @@ from django.conf.urls.defaults import *
 admin_urls = patterns(
      'spicy.labels.admin',
 
-#     # labels
-#     url(r'^$', 'labels', name='index'),
-#     url(r'^add/$', 'label_add', name='add'),
-#     url(r'^(?P<label_id>\d+)/$', 'label_edit', name='edit'),
-#     url(r'^delete/$', 'label_delete', name='delete'),
+     # labels
+     url(r'^$', 'labels_list', name='index'),
+     url(r'^create/$', 'create', name='create'),
+     url(r'^(?P<label_id>\d+)/$', 'edit', name='edit'),
+     url(r'^delete/$', 'delete', name='delete'),
 )
 
 
