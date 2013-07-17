@@ -19,7 +19,7 @@ class LabelConsumerForm(forms.ModelForm):
         self.fields['labels'].initial = ', '.join([lb.text for lb in self.instance.label_set.all()])
 
     def save(self, *args, **kwargs):
-        instance = super(LabelConsumerform, self).save(*args, **kwargs)
+        instance = super(LabelConsumerForm, self).save(*args, **kwargs)
 
         labels = self.cleaned_data['labels'].split(',')
 
