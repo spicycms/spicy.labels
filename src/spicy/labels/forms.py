@@ -15,15 +15,17 @@ class LabelConsumerForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(LabelConsumerForm, self).__init__(*args, **kwargs)
-
-        self.fields['labels'].initial = ', '.join([lb.text for lb in self.instance.label_set.all()])
+        
+        if self.instance.pk:
+            self.fields['labels'].initial = ', '.join([lb.text for lb in self.instance.label_set.all()])
+        
 
     def save(self, *args, **kwargs):
         instance = super(LabelConsumerForm, self).save(*args, **kwargs)
 
         labels = self.cleaned_data['labels'].split(',')
 
-        if labels:
+        if labels and self.instance.pk:
             exists_labels = list(models.Label.objects.filter(text__in=labels))
 
             #create new labels
