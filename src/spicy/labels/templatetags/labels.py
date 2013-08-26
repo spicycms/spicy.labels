@@ -1,9 +1,8 @@
-from __future__ import absolute_import
-import datetime
 from blog import defaults as bl_defaults
 from django import template
 from django.db.models import Count
-from labels import models
+from spicy.labels import models
+import datetime
 
 register = template.Library()
 
@@ -16,3 +15,9 @@ def top_labels(num):
         document__state=bl_defaults.STATE_APPROVED
         ).values('text').annotate(
         Count('text')).order_by('-text__count')[:num]
+
+
+@register.simple_tag(takes_context=True)
+def all_labels(context):
+    context['labels'] = models.Label.objects.select_related()
+    return "" 
