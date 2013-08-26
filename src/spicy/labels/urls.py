@@ -1,6 +1,10 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, include, url
 
 
+public_urls = patterns(
+    'spicy.labels.views',
+    url(r'^l(?P<lab_id>\d+)/$', 'label', name='label'),
+)
 admin_urls = patterns(
      'spicy.labels.admin',
 
@@ -15,4 +19,5 @@ admin_urls = patterns(
 urlpatterns = patterns(
     '',
     url(r'^admin/labels/', include(admin_urls, namespace='admin')),
+    url(r'^', include(public_urls, namespace='public'))
     )
