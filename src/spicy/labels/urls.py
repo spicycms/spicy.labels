@@ -3,7 +3,8 @@ from django.conf.urls import patterns, include, url
 
 public_urls = patterns(
     'spicy.labels.views',
-    url(r'^l(?P<lab_id>\d+)/$', 'label', name='label'),
+#    url(r'^label/(?P<lab_id>\d+)/$', 'label', name='label'),
+    url(r'^label/(?P<slug>.+)/$', 'label', name='label'),
 )
 admin_urls = patterns(
      'spicy.labels.admin',

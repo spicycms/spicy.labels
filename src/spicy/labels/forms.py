@@ -1,13 +1,13 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from . import models
+from spicy.labels import models
 
 
 class LabelForm(forms.ModelForm):
     class Meta:
         model = models.Label
-        fields = 'text', 'order_lv'
+        fields = 'text', 'order_lv', 'slug'
 
 
 class LabelConsumerForm(forms.ModelForm):
@@ -15,10 +15,9 @@ class LabelConsumerForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(LabelConsumerForm, self).__init__(*args, **kwargs)
-        
         if self.instance.pk:
-            self.fields['labels'].initial = ', '.join([lb.text for lb in self.instance.label_set.all()])
-        
+            self.fields['labels'].initial = ', '.join(
+                [lb.text for lb in self.instance.label_set.all()])
 
     def save(self, *args, **kwargs):
         instance = super(LabelConsumerForm, self).save(*args, **kwargs)

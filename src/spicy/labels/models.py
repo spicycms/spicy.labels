@@ -1,11 +1,15 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from . import defaults 
+from . import defaults
+
+from spicy.labels import widget
+
 
 class Label(models.Model):
     consumers = models.ManyToManyField(defaults.LABELS_CONSUMER)
     text = models.CharField(_('Label text'), max_length=255, db_index=True)
+    slug = widget.RuSlugField(_('Slug'), blank=False, max_length=100)
     url = models.CharField(_('External url'), max_length=255)
     order_lv = models.PositiveSmallIntegerField(default=0)
 
@@ -15,3 +19,7 @@ class Label(models.Model):
 
     def __unicode__(self):
         return self.text
+
+    def save(self, *args, **kwargs):
+        self.slug = self.text.lower().replace(' ','-')
+        super(Label, self).save()
