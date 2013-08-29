@@ -11,28 +11,20 @@ class LabelForm(forms.ModelForm):
 
 
 class LabelConsumerForm(forms.ModelForm):
-    labels = forms.CharField(label=_('Labels'), required=False)
+    labels = forms.CharField(
+        label=_('Labels'), required=False, widget=forms.HiddenInput)
 
     def __init__(self, *args, **kwargs):
         super(LabelConsumerForm, self).__init__(*args, **kwargs)
         if self.instance.pk:
             self.fields['labels'].initial = ', '.join(
-                [lb.text for lb in self.instance.label_set.all()])
+                [str(lb.id) for lb in self.instance.label_set.all()])
 
     def save(self, *args, **kwargs):
         instance = super(LabelConsumerForm, self).save(*args, **kwargs)
-
-        labels = self.cleaned_data['labels'].split(',')
-
-        if labels and self.instance.pk:
-            exists_labels = list(models.Label.objects.filter(text__in=labels))
-
-            #create new labels
-            for label in (set(labels) - set([lb.text for lb in exists_labels])):
-                label, created = models.Label.objects.get_or_create(text=label)
-                exists_labels.append(label)
-
-            instance.label_set.clear()
-            instance.label_set.add(*exists_labels)
-
+        print instance
+        print instance.labels
+        print self.cleaned_data['labels'].split(',')
+        instance.labels = self.cleaned_data['labels'].split(',')
+        instance.save()
         return instance

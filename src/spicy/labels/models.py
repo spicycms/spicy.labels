@@ -21,5 +21,5 @@ class Label(models.Model):
         return self.text
 
     def save(self, *args, **kwargs):
-        self.slug = self.text.lower().replace(' ','-')
+        self.slug = self.text.lower().replace(' ', '-')
         super(Label, self).save()

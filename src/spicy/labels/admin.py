@@ -109,3 +109,18 @@ def delete_from_list(request):
     except Exception, e:
         print e
     return dict(message=unicode(message), status=status)
+
+
+@ajax_request
+def autocomplete(request):
+    search_kwargs = dict(text__icontains=request.GET.get('search', ''))
+    labels = models.Label.objects.filter(**search_kwargs)
+    return [{'title': label.text, 'id': label.pk} for label in labels]
+
+
+@ajax_request
+def get_data(request):
+    ids = [int(id) for id in request.GET['ids'].split(',')]
+    objects = list(models.Label.objects.filter(pk__in=ids))
+    objects.sort(key=lambda obj: ids.index(obj.pk))
+    return [{'id': obj.pk, 'text': obj.text} for obj in objects]
