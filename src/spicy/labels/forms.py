@@ -22,9 +22,7 @@ class LabelConsumerForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         instance = super(LabelConsumerForm, self).save(*args, **kwargs)
-        print instance
-        print instance.labels
-        print self.cleaned_data['labels'].split(',')
-        instance.labels = self.cleaned_data['labels'].split(',')
+        value = self.cleaned_data['labels']
+        instance.labels =  value.split('') if value else []
         instance.save()
         return instance
