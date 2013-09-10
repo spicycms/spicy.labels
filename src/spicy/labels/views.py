@@ -12,4 +12,3 @@ def label(request, slug):
         obj = get_object_or_404(models.Label, slug=s)
         docs.append(obj)
     return {'docs': docs}
-
