@@ -29,7 +29,7 @@ class LabelConsumerForm(forms.ModelForm):
                 new_value.append(val)
             else:
                 label = models.Label()
-                label.text = val.replace('new_','')
+                label.text = val.replace('new_','',1)
                 label.save()
                 new_value.append(label.id)
         instance.labels =  new_value if value else []

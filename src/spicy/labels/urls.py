@@ -15,7 +15,6 @@ admin_urls = patterns(
     url(r'^delete/$', 'delete', name='delete'),
     url(r'^autocomplete/$', 'autocomplete', name='autocomplete'),
     url(r'^data/$', 'get_data', name='get-data'),
-    url(r'^add-label/$', 'add_label', name='add-label'),
 )
 
 

@@ -124,16 +124,3 @@ def get_data(request):
     objects = list(models.Label.objects.filter(pk__in=ids))
     objects.sort(key=lambda obj: ids.index(obj.pk))
     return [{'id': obj.pk, 'text': obj.text} for obj in objects]
-
-@ajax_request
-def add_label(request):
-    labels = request.GET['text'].split(',')
-    for lab in labels:
-        try:
-            models.Label.objects.get(text=lab)
-        except:
-            c_label = models.Label()
-            c_label.text = lab
-            c_label.save()
-    objects = models.Label.objects.filter(text__in=labels)
-    return [{'id': obj.id, 'text': obj.text} for obj in objects]
