@@ -23,3 +23,7 @@ class Label(models.Model):
     def save(self, *args, **kwargs):
         self.slug = self.text.lower().replace(' ', '-')
         super(Label, self).save()
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'labels:public:label', None, {'slug': self.slug}
