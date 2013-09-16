@@ -15,6 +15,7 @@ def top_labels(num):
 
 
 @register.simple_tag(takes_context=True)
-def all_labels(context):
-    context['labels'] = models.Label.objects.select_related()
+def all_labels(context, num=None):
+    context['labels'] = models.Label.objects.annotate(
+        Count('consumers')).select_related().order_by('-consumers__count')[:num]
     return "" 
