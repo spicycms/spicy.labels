@@ -11,7 +11,7 @@ class Label(models.Model):
     text = models.CharField(_('Label text'), max_length=255, db_index=True)
     slug = widget.RuSlugField(_('Slug'), blank=False, max_length=100)
     url = models.CharField(_('External url'), max_length=255)
-    order_lv = models.PositiveSmallIntegerField(default=0)
+    order_lv = models.PositiveSmallIntegerField(_('Position'), default=0)
 
     class Meta:
         db_table = 'lb_label'

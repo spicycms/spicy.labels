@@ -73,7 +73,7 @@ def edit(request, label_id):
                 'labels:admin:index'))
     else:
         form = forms.LabelForm(instance=label)
-    return {'form': form}
+    return {'form': form, 'instance': label}
 
 
 @is_staff(required_perms='labels.delete_category')
@@ -86,7 +86,7 @@ def delete(request, label_id):
 
     if request.method == 'POST':
         if 'confirm' in request.POST:
-            category.delete()
+            label.delete()
             return http.HttpResponseRedirect(
                 reverse('labels:admin:index'))
 
@@ -99,7 +99,7 @@ def delete_from_list(request):
     message = ''
     status = 'ok'    
     try:
-        for category in models.Label.objects.filter(
+        for label in models.Label.objects.filter(
             id__in=request.POST.getlist('id')):
             label.delete()
         message = _('All objects have been deleted successfully')

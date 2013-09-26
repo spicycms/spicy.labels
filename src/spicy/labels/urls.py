@@ -12,7 +12,7 @@ admin_urls = patterns(
     url(r'^$', 'labels_list', name='index'),
     url(r'^create/$', 'create', name='create'),
     url(r'^(?P<label_id>\d+)/$', 'edit', name='edit'),
-    url(r'^delete/$', 'delete', name='delete'),
+    url(r'^delete/(?P<label_id>\d+)/$', 'delete', name='delete'),
     url(r'^autocomplete/$', 'autocomplete', name='autocomplete'),
     url(r'^data/$', 'get_data', name='get-data'),
 )
