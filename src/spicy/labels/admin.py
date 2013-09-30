@@ -37,8 +37,7 @@ class AdminApp(AdminAppBase):
         return dict(app=self, *args, **kwargs)
 
 
-
-@is_staff(required_perms='labels.change_category')
+@is_staff(required_perms='labels.change_label')
 @render_to('list.html', use_admin=True)
 def labels_list(request):
     nav = NavigationFilter(request)
@@ -47,7 +46,7 @@ def labels_list(request):
     return {'paginator': paginator, 'objects_list': objects_list, 'nav': nav}
 
 
-@is_staff(required_perms='labels.add_category')
+@is_staff(required_perms='labels.add_label')
 @render_to('create.html', use_admin=True)
 def create(request):
     if request.method == 'POST':
@@ -61,7 +60,7 @@ def create(request):
     return {'form': form}
 
 
-@is_staff(required_perms='labels.change_category')
+@is_staff(required_perms='labels.change_label')
 @render_to('edit.html', use_admin=True)
 def edit(request, label_id):
     label = get_object_or_404(models.Label, pk=label_id)
@@ -76,7 +75,7 @@ def edit(request, label_id):
     return {'form': form, 'instance': label}
 
 
-@is_staff(required_perms='labels.delete_category')
+@is_staff(required_perms='labels.delete_label')
 @render_to('delete.html', use_admin=True)
 def delete(request, label_id):
     message = ''
@@ -93,14 +92,14 @@ def delete(request, label_id):
     return dict(message=unicode(message), status=status, instance=label)
 
 
-@is_staff(required_perms='labels.delete_category')
+@is_staff(required_perms='labels.delete_label')
 @ajax_request
 def delete_from_list(request):
     message = ''
-    status = 'ok'    
+    status = 'ok'
     try:
         for label in models.Label.objects.filter(
-            id__in=request.POST.getlist('id')):
+                id__in=request.POST.getlist('id')):
             label.delete()
         message = _('All objects have been deleted successfully')
     except KeyError, e:
