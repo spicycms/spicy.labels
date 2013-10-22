@@ -1,11 +1,9 @@
 # coding=utf-8
 from django import http
-from django.conf import settings
-from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
-
+from spicy.core.admin import defaults as admin_defaults
 from spicy.core.admin.conf import AdminAppBase, AdminLink, Perms
 from spicy.core.profile.decorators import is_staff
 from spicy.core.siteskin.common import NavigationFilter
@@ -41,7 +39,8 @@ class AdminApp(AdminAppBase):
 @render_to('list.html', use_admin=True)
 def labels_list(request):
     nav = NavigationFilter(request)
-    paginator = nav.get_queryset_with_paginator(models.Label)
+    paginator = nav.get_queryset_with_paginator(
+        models.Label, obj_per_page=admin_defaults.ADMIN_OBJECTS_PER_PAGE)
     objects_list = paginator.current_page.object_list
     return {'paginator': paginator, 'objects_list': objects_list, 'nav': nav}
 
