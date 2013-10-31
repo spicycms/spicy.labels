@@ -21,7 +21,8 @@ class Label(models.Model):
         return self.text
 
     def save(self, *args, **kwargs):
-        self.slug = self.text.lower().replace(' ', '-')
+        self.slug = self.text.strip().replace(
+            ' ', '-').replace('"', '').replace("'", "").lower()
         super(Label, self).save()
 
     @models.permalink
