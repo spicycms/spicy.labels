@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
+import re
 from . import defaults
 
 from spicy.labels import widget
@@ -21,8 +21,9 @@ class Label(models.Model):
         return self.text
 
     def save(self, *args, **kwargs):
-        self.slug = self.text.strip().replace(
-            ' ', '-').replace('"', '').replace("'", "").lower()
+        text = re.compile(u'(\W+)', re.UNICODE)
+        label = text.sub(' ', self.text)
+        self.slug = label.lower().strip().replace(' ','-')
         super(Label, self).save()
 
     @models.permalink
