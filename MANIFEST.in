@@ -1,4 +1,4 @@
-recursive-include src/spicy/labels/locale/*
-recursive-include src/spicy/labels/static/*
-recursive-include src/spicy/labels/templates/*
+recursive-include src/spicy/labels/locale *
+recursive-include src/spicy/labels/static *
+recursive-include src/spicy/labels/templates *
 
