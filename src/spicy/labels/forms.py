@@ -6,7 +6,7 @@ from spicy.labels import models
 class LabelForm(forms.ModelForm):
     class Meta:
         model = models.Label
-        fields = 'text', 'order_lv', 'slug'
+        fields = 'text', 'order_lv', 'slug', 'color'
 
 
 class LabelConsumerForm(forms.ModelForm):

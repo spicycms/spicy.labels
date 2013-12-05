@@ -12,6 +12,9 @@ class Label(models.Model):
     slug = widget.RuSlugField(_('Slug'), blank=False, max_length=100)
     url = models.CharField(_('External url'), max_length=255)
     order_lv = models.PositiveSmallIntegerField(_('Position'), default=0)
+    color = models.CharField(
+        choices=defaults.LABEL_CHOICE_COLOR, verbose_name=_('Color or Class'),
+        max_length=10, default=defaults.LABEL_CHOICE_COLOR_DEFAULT)
 
     class Meta:
         db_table = 'lb_label'
@@ -23,7 +26,7 @@ class Label(models.Model):
     def save(self, *args, **kwargs):
         text = re.compile(u'(\W+)', re.UNICODE)
         label = text.sub(' ', self.text)
-        self.slug = label.lower().strip().replace(' ','-')
+        self.slug = label.lower().strip().replace(' ', '-')
         super(Label, self).save()
 
     @models.permalink
