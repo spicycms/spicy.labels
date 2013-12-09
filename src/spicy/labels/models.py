@@ -14,7 +14,7 @@ class Label(models.Model):
     order_lv = models.PositiveSmallIntegerField(_('Position'), default=0)
     color = models.CharField(
         choices=defaults.LABEL_CHOICE_COLOR, verbose_name=_('Color or Class'),
-        max_length=10, default=defaults.LABEL_CHOICE_COLOR_DEFAULT)
+        max_length=100, default=defaults.LABEL_CHOICE_COLOR_DEFAULT)
 
     class Meta:
         db_table = 'lb_label'
