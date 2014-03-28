@@ -117,7 +117,11 @@ def autocomplete(request):
 
 @ajax_request
 def get_data(request):
-    ids = [int(id) for id in request.GET['ids'].split(',')]
+    g_ids = []
+    for val in request.GET['ids'].split(','):
+        if val.find('new_'):
+            g_ids.append(val)
+    ids = [int(id) for id in g_ids]
     objects = list(models.Label.objects.filter(pk__in=ids))
     objects.sort(key=lambda obj: ids.index(obj.pk))
     return [{'id': obj.pk, 'text': obj.text} for obj in objects]
