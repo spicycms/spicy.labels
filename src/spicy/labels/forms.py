@@ -16,14 +16,14 @@ class LabelConsumerForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LabelConsumerForm, self).__init__(*args, **kwargs)
         if self.instance.pk:
-            self.fields['labels'].initial = ', '.join(
+            self.fields['labels'].initial = '; '.join(
                 [str(lb.id) for lb in self.instance.label_set.all()])
 
     def save(self, *args, **kwargs):
         instance = super(LabelConsumerForm, self).save(*args, **kwargs)
         value = self.cleaned_data['labels']
         new_value = []
-        for val in value.split(','):
+        for val in value.split(';'):
             if val.find('new_'):
                 new_value.append(val)
             else:
