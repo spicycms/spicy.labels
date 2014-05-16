@@ -23,9 +23,7 @@ class LabelConsumerForm(forms.ModelForm):
         instance = super(LabelConsumerForm, self).save(*args, **kwargs)
         value = self.cleaned_data['labels']
         new_value = []
-        print value
         for val in value.split(','):
-            print val
             if val.find('new_'):
                 new_value.append(val)
             else:
