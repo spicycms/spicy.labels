@@ -28,7 +28,7 @@ class LabelConsumerForm(forms.ModelForm):
                 new_value.append(val)
             else:
                 label = models.Label()
-                label.text = val.replace('new_','',1)
+                label.text = val.replace('new_','',1).replace('&#44;',',')
                 if label.text:
                     label.save()
                     new_value.append(label.id)
