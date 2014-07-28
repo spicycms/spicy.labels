@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from spicy.core.admin import defaults as admin_defaults
-from spicy.core.admin.conf import AdminAppBase, AdminLink, Perms
+from spicy.core.admin.conf import AdminAppBase, AdminLink
 from spicy.core.profile.decorators import is_staff
 from spicy.core.siteskin.decorators import ajax_request, render_to
 from spicy.utils import NavigationFilter
@@ -17,13 +17,22 @@ class AdminApp(AdminAppBase):
     order_number = 3
 
     menu_items = (
-        AdminLink('labels:admin:create', _('Create label')),
-        AdminLink('labels:admin:index', _('All labels')),
+        AdminLink(
+            'labels:admin:create', _('Create label'),
+            icon_class='icon-tag', perms='labels.add_label'),
+        AdminLink(
+            'labels:admin:index', _('All labels'), icon_class='icon-cog',
+            perms='labels.change_label'
+        ),
     )
 
-    create = AdminLink('labels:admin:create', _('Create label'),)
-
-    perms = Perms(view=[],  write=[], manage=[])
+    dashboard_links = [
+        AdminLink(
+            'labels:admin:create', _('Create label'),
+            models.Label.objects.count(), icon_class='icon-tag',
+            perms='perms.add_label'
+        )
+    ]
 
     @render_to('menu.html', use_admin=True)
     def menu(self, request, *args, **kwargs):
