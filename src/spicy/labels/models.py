@@ -23,11 +23,18 @@ class Label(models.Model):
     def __unicode__(self):
         return self.text
 
+    def get_slugs(self):
+        all_labels = Label.objects.values('slug')
+        labels = [label['slug'] for label in all_labels]
+        return labels
+
     def save(self, *args, **kwargs):
         text = re.compile(u'(\W+)', re.UNICODE)
         label = text.sub(' ', self.text)
         self.slug = label.lower().strip().replace(' ', '-')
-        super(Label, self).save()
+        print self.slug, self.get_slugs()
+        if self.slug not in self.get_slugs():
+            super(Label, self).save()
 
     @models.permalink
     def get_absolute_url(self):
