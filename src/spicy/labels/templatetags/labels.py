@@ -53,6 +53,9 @@ class LabelNode(template.Node):
 
         label = models.Label.objects.get(slug=slug)
         objects = Doc.objects.filter(label=label)
+        if not self.show_all:
+            objects = objects.filter(
+                is_public=True, pub_date__lte=datetime.now())
 
         def get_vars((k, v)):
             try:
