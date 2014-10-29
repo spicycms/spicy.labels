@@ -2,6 +2,7 @@ from django import template
 from django.db.models import Count
 from spicy.labels import models
 import datetime
+from datetime import datetime
 from spicy.utils import get_custom_model_class
 from spicy.labels import defaults
 from django.core.paginator import Paginator
@@ -55,7 +56,7 @@ class LabelNode(template.Node):
         objects = Doc.objects.filter(label=label)
         if not self.show_all:
             objects = objects.filter(
-                is_public=True, pub_date__lte=datetime.now())
+                is_public=True, pub_date__lte=datetime.datetime.now())
 
         def get_vars((k, v)):
             try:
