@@ -9,7 +9,7 @@ from spicy.labels import widget
 class Label(models.Model):
     consumers = models.ManyToManyField(defaults.LABELS_CONSUMER)
     text = models.CharField(_('Label text'), max_length=255, db_index=True)
-    slug = widget.RuSlugField(_('Slug'), blank=False, max_length=100)
+    slug = widget.RuSlugField(_('Slug'), blank=False, max_length=100, unique=True)
     url = models.CharField(_('External url'), max_length=255)
     order_lv = models.PositiveSmallIntegerField(_('Position'), default=0)
     color = models.CharField(
@@ -32,7 +32,6 @@ class Label(models.Model):
         text = re.compile(u'(\W+)', re.UNICODE)
         label = text.sub(' ', self.text)
         self.slug = label.lower().strip().replace(' ', '-')
-        print self.slug, self.get_slugs()
         if self.slug not in self.get_slugs():
             super(Label, self).save()
 

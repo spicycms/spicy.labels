@@ -14,12 +14,8 @@ def label(request, slug):
     slug = slug.split('+')
     labels = []
     for s in slug:
-        objs = models.Label.objects.filter(slug=s)
-        if objs:
-            for obj in objs:
-                labels.append(obj)
-        else:
-            raise http.Http404
+        obj = get_object_or_404(models.Label, slug=s)
+        labels.append(obj)
     try:
         docs = Document.pub_objects.filter(label__in=labels)
     except AttributeError:

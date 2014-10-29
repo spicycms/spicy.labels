@@ -32,9 +32,6 @@ class LabelConsumerForm(forms.ModelForm):
                 if label.text:
                     label.save()
                     new_value.append(label.id)
-        try:
-            instance.labels =  new_value if value else []
-        except:
-            pass
+        instance.labels =  new_value if value else []
         instance.save()
         return instance
