@@ -1,7 +1,6 @@
 from django import template
 from django.db.models import Count
 from spicy.labels import models
-import datetime
 from datetime import datetime
 from spicy.utils import get_custom_model_class
 from spicy.labels import defaults
@@ -14,7 +13,7 @@ register = template.Library()
 
 @register.filter
 def top_labels(num):
-    now = datetime.datetime.now()
+    now = datetime.now()
     return models.Label.objects.filter(
             document__is_public=True, document__pub_date__lte=now,
         ).values('text').annotate(Count('text')).order_by('-text__count')[:num]
@@ -56,7 +55,7 @@ class LabelNode(template.Node):
         objects = Doc.objects.filter(label=label)
         if not self.show_all:
             objects = objects.filter(
-                is_public=True)
+                is_public=True, pub_date__lte=datetime.now())
 
         def get_vars((k, v)):
             try:
