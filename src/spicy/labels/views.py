@@ -1,20 +1,21 @@
 # _*_ coding: utf-8 _*_
 from spicy.core.siteskin.decorators import render_to
-from spicy.labels import models
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, InvalidPage
-from spicy.presscenter import defaults
+from spicy.presscenter import defaults as ps_defaults
+from spicy.labels import defaults as lb_defaults
 from spicy.utils.models import get_custom_model_class
 from django import http
 
-Document = get_custom_model_class(defaults.CUSTOM_DOCUMENT_MODEL)
+Label = get_custom_model_class(lb_defaults.CUSTOM_LABEL_MODEL)
+Document = get_custom_model_class(ps_defaults.CUSTOM_DOCUMENT_MODEL)
 
 @render_to('spicy.labels/label.html', use_siteskin=True)
 def label(request, slug):
     slug = slug.split('+')
     labels = []
     for s in slug:
-        obj = get_object_or_404(models.Label, slug=s)
+        obj = get_object_or_404(Label, slug=s)
         labels.append(obj)
     try:
         docs = Document.pub_objects.filter(label__in=labels)
@@ -25,7 +26,7 @@ def label(request, slug):
             page_num = int(request.GET.get('page', 1))
         except ValueError:
             page_num = 1
-    paginator = Paginator(docs, defaults.DEFAULTS_DOCS_PER_PAGE)
+    paginator = Paginator(docs, ps_defaults.DEFAULTS_DOCS_PER_PAGE)
     page = paginator.page(page_num)
     paginator.current_page = page
     docs = page.object_list

@@ -1,0 +1,16 @@
+begin;
+ALTER TABLE lb_label ADD COLUMN seo_title varchar(255);
+ALTER TABLE lb_label ADD COLUMN seo_h1 varchar(255);
+ALTER TABLE lb_label ADD COLUMN seo_description text;
+ALTER TABLE lb_label ADD COLUMN seo_keywords text;
+ALTER TABLE lb_label ADD COLUMN og_title varchar(255);
+ALTER TABLE lb_label ADD COLUMN og_description varchar(255);
+ALTER TABLE lb_label ADD COLUMN og_url varchar(255);
+ALTER TABLE lb_label ADD COLUMN og_image varchar(255);
+commit;
+begin;
+alter table lb_label add column seo_consistency smallint CHECK ("seo_consistency" >= 0);
+commit;
+begin;
+update django_content_type SET app_label='webapp' where model='label';
+commit;

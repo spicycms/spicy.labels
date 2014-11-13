@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.conf import settings
 
 
 public_urls = patterns(
@@ -17,6 +18,11 @@ admin_urls = patterns(
     url(r'^data/$', 'get_data', name='get-data'),
 )
 
+if 'spicy.seo' in settings.INSTALLED_APPS:
+    admin_urls += patterns(
+        'spicy.labels.admin',
+        url(r'^(?P<label_id>\d+)/seo/$', 'edit_label_seo', name='edit-label-seo'),
+    )
 
 urlpatterns = patterns(
     '',

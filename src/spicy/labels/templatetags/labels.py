@@ -1,12 +1,12 @@
 from django import template
 from django.db.models import Count
-from spicy.labels import models
 from datetime import datetime
 from spicy.utils import get_custom_model_class
 from spicy.labels import defaults
 from django.core.paginator import Paginator
 
 Doc = get_custom_model_class(defaults.LABELS_CONSUMER)
+Label = get_custom_model_class(defaults.CUSTOM_LABEL_MODEL)
 
 register = template.Library()
 
@@ -14,14 +14,14 @@ register = template.Library()
 @register.filter
 def top_labels(num):
     now = datetime.now()
-    return models.Label.objects.filter(
+    return Label.objects.filter(
             document__is_public=True, document__pub_date__lte=now,
         ).values('text').annotate(Count('text')).order_by('-text__count')[:num]
 
 
 @register.simple_tag(takes_context=True)
 def all_labels(context, num=None):
-    context['labels'] = models.Label.objects.annotate(
+    context['labels'] = Label.objects.annotate(
         Count('consumers')).select_related().order_by('-consumers__count')[:num]
     return ""
 
@@ -51,7 +51,7 @@ class LabelNode(template.Node):
         except:
             slug = None
 
-        label = models.Label.objects.get(slug=slug)
+        label = Label.objects.get(slug=slug)
         objects = Doc.objects.filter(label=label)
         if not self.show_all:
             objects = objects.filter(
