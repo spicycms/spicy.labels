@@ -79,6 +79,7 @@ def edit(request, label_id):
         form = forms.LabelForm(request.POST, instance=label)
         if form.is_valid():
             form.save()
+            form = forms.LabelForm(instance=label)
 #            return http.HttpResponseRedirect(reverse(
 #                'labels:admin:index'))
     else:

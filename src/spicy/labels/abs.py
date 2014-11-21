@@ -3,11 +3,10 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from spicy.core.service import api
 from spicy.labels import widget, defaults
-from spicy.utils.models import get_custom_model_class
 
-#Label = get_custom_model_class(defaults.CUSTOM_LABEL_MODEL)
 
 class AbstractLabelsConsumer(models.Model):
+
     class Meta:
         abstract = True
 
@@ -24,19 +23,23 @@ class AbstractLabelsConsumer(models.Model):
 
         for label_id in ids:
             api.register['label'].get_label(pk=label_id).consumers.add(self)
-            
 
 
 class AbstractLabel(models.Model):
     consumers = models.ManyToManyField(defaults.LABELS_CONSUMER,
-        related_name='label')
+                                       related_name='label')
     text = models.CharField(_('Label text'), max_length=255, db_index=True)
-    slug = widget.RuSlugField(_('Slug'), blank=False, max_length=100, unique=True)
+    slug = widget.RuSlugField(
+        _('Slug'), blank=False, max_length=100, unique=True)
     url = models.CharField(_('External url'), max_length=255)
     order_lv = models.PositiveSmallIntegerField(_('Position'), default=0)
     color = models.CharField(
         choices=defaults.LABEL_CHOICE_COLOR, verbose_name=_('Color or Class'),
         max_length=100, default=defaults.LABEL_CHOICE_COLOR_DEFAULT)
+
+    def __init__(self, *args, **kwargs):
+        super(AbstractLabel, self).__init__(*args, **kwargs)
+        self._prev_text = self.text
 
     class Meta:
         abstract = True
@@ -50,9 +53,13 @@ class AbstractLabel(models.Model):
         return self.text
 
     def save(self, *args, **kwargs):
+
         text = re.compile(u'(\W+)', re.UNICODE)
         label = text.sub(' ', self.text)
-        self.slug = label.lower().strip().replace(' ', '-')
+
+        if self._prev_text != self.text:
+            self.slug = label.lower().strip().replace(' ', '-')
+
         super(AbstractLabel, self).save()
 
     @models.permalink
