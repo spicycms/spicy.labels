@@ -38,12 +38,6 @@ setup(
     long_description=long_description(),
     namespace_packages=['spicy',],
 
-    #install_requires=[
-    #    'spicy.presscenter>=1.0',
-    #],
-    #dependency_links=[
-    #    'hg+http://hg.bramabrama.com/spicy.presscenter#egg=spicy.presscenter',
-    #],
     classifiers=[
         'Framework :: Django',
         'Development Status :: 4 - Beta',
