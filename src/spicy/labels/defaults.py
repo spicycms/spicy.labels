@@ -6,7 +6,7 @@ CUSTOM_LABEL_MODEL = (
     settings.CUSTOM_LABEL_MODEL)
 
 
-LABELS_CONSUMER = getattr(settings, 'LABELS_CONSUMER', None)
+LABELS_CONSUMER = getattr(settings, 'LABELS_CONSUMER', 'document.DefaultDocument')
 LABEL_CHOICE_COLOR_DEFAULT = getattr(
     settings, 'LABEL_CHOICE_COLOR_DEFAULT', 'tag-1')
 LABEL_CHOICE_COLOR = getattr(
