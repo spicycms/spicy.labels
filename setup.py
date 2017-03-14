@@ -20,9 +20,9 @@ def long_description():
 
 setup(
     name='spicy.labels',
-    version='1.0',
-    author='Burtsev Alexander',
-    author_email='eburus@gmail.com',
+    version='0.0.1',
+    author='BramaBrama Ltd',
+    author_email='help@spicycms.com',
     description='Spicy labels',
     license='BSD',
     keywords='django, cms',
@@ -38,12 +38,6 @@ setup(
     long_description=long_description(),
     namespace_packages=['spicy',],
 
-    install_requires=[
-        'spicy.presscenter>=1.0',
-    ],
-    dependency_links=[
-        'hg+http://hg.bramabrama.com/spicy.presscenter#egg=spicy.presscenter',
-    ],
     classifiers=[
         'Framework :: Django',
         'Development Status :: 4 - Beta',
