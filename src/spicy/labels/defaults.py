@@ -12,3 +12,5 @@ LABEL_CHOICE_COLOR_DEFAULT = getattr(
 LABEL_CHOICE_COLOR = getattr(
     settings, 'LABEL_CHOICE_COLOR', (('tag-1', 'tag-1'),
     ('tag-2', 'tag-2'), ('tag-3', 'tag-3'), ('tag-4', 'tag-4')))
+
+LABEL_FORM = getattr(settings, 'CUSTOM_LABEL_FORM', 'spicy.labels.forms.LabelForm')

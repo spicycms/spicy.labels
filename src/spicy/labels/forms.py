@@ -5,6 +5,7 @@ from . import defaults
 
 LabelModel = get_custom_model_class(defaults.CUSTOM_LABEL_MODEL)
 
+
 class LabelForm(forms.ModelForm):
     class Meta:
         model = LabelModel

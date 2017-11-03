@@ -8,7 +8,7 @@ from spicy.core.admin import defaults as admin_defaults
 from spicy.core.admin.conf import AdminAppBase, AdminLink
 from spicy.core.profile.decorators import is_staff
 from spicy.core.siteskin.decorators import ajax_request, render_to
-from spicy.utils import NavigationFilter
+from spicy.utils import NavigationFilter, load_module
 from spicy.utils.models import get_custom_model_class
 from . import defaults, forms
 
@@ -60,14 +60,15 @@ def labels_list(request):
 @is_staff(required_perms='labels.add_label')
 @render_to('create.html', use_admin=True)
 def create(request):
+    LabelForm = load_module(defaults.LABEL_FORM)
     if request.method == 'POST':
-        form = forms.LabelForm(request.POST)
+        form = LabelForm(request.POST)
         if form.is_valid():
             form.save()
             return http.HttpResponseRedirect(reverse(
                 'labels:admin:index'))
     else:
-        form = forms.LabelForm()
+        form = LabelForm()
     return {'form': form}
 
 
@@ -75,15 +76,16 @@ def create(request):
 @render_to('edit.html', use_admin=True)
 def edit(request, label_id):
     label = get_object_or_404(LabelModel, pk=label_id)
+    LabelForm = load_module(defaults.LABEL_FORM)
     if request.method == 'POST':
-        form = forms.LabelForm(request.POST, instance=label)
+        form = LabelForm(request.POST, instance=label)
         if form.is_valid():
             form.save()
-            form = forms.LabelForm(instance=label)
+            form = LabelForm(instance=label)
 #            return http.HttpResponseRedirect(reverse(
 #                'labels:admin:index'))
     else:
-        form = forms.LabelForm(instance=label)
+        form = LabelForm(instance=label)
     return {'form': form, 'instance': label, 'tab': 'label'}
 
 
